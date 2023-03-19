@@ -4,7 +4,7 @@
   "description": "Icons for zkSync Lite tokens",
   "main": "index.js",
   "scripts": {
-    "parse": "echo \"Error: no test specified\" && exit 1"
+    "parse": "npx ts-node parser"
   },
   "keywords": [
     "zksync",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/JackHamer09/zksync-lite-token-icons#readme",
   "devDependencies": {
+    "@types/node": "^18.15.3",
     "ohmyfetch": "^0.4.21",
     "zksync": "^0.13.1"
   }

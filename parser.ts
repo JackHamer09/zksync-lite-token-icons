@@ -1,9 +1,9 @@
-/* This is a standalone program to parse token icons */
-import { $fetch } from "ohmyfetch";
-import { getDefaultRestProvider } from "zksync";
+const fs = require("fs");
+const { $fetch } = require("ohmyfetch");
+const { getDefaultRestProvider } = require("zksync");
 
-import liteTokenIcons from "./tokens-icons.json";
-import preferedCoingeckoIds from "./utils/preferred-coingecko-ids.json";
+const liteTokenIcons = require("./tokens-icons.json");
+const preferredCoingeckoIds = require("./utils/preferred-coingecko-ids.json");
 
 const getTokenInfo = async (
   tokenCoingeckoID: string
@@ -30,7 +30,8 @@ const getTokenInfo = async (
 
 type Token = { id: string; symbol: string; name: string };
 
-export default async () => {
+/* Shit code tho */
+(async () => {
   const coingeckoTokens: {
     id: string;
     symbol: string;
@@ -85,7 +86,7 @@ export default async () => {
       }
       if (coingeckoTokens.length > 1) {
         console.log(`Multiple tokens found for "${tokenSymbol}"`);
-        if (!Object.prototype.hasOwnProperty.call(preferedCoingeckoIds, tokenSymbol)) {
+        if (!Object.prototype.hasOwnProperty.call(preferredCoingeckoIds, tokenSymbol)) {
           console.error(`Add preferred id for "${tokenSymbol}" manually. ${++counter} / ${Object.keys(tokens).length}`);
           multipleTokensForSingleSymbol[tokenSymbol] = {
             symbol: tokenSymbol,
@@ -96,7 +97,7 @@ export default async () => {
           continue;
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const preferredId = (preferedCoingeckoIds as any)[tokenSymbol];
+        const preferredId = (preferredCoingeckoIds as any)[tokenSymbol];
         const foundToken = coingeckoTokens.find((token) => token.id === preferredId);
         if (!foundToken) {
           console.error(
@@ -131,7 +132,12 @@ export default async () => {
   } catch (error) {
     console.error(error);
   }
-  console.log("\n\nResults:", tokenSymbolToImage);
-  console.log("Duplicate tokens:", multipleTokensForSingleSymbol);
-  console.log("Not found tokens:", notFoundTokenSymbols);
-};
+  fs.writeFileSync("./temp/duplicate-tokens.json", JSON.stringify(multipleTokensForSingleSymbol, null, 2));
+  console.log(`\nDuplicate tokens with total of ${Object.keys(multipleTokensForSingleSymbol).length} saved to temp/duplicate-tokens.json`);
+  
+  fs.writeFileSync("./temp/not-found-tokens.json", JSON.stringify(notFoundTokenSymbols, null, 2));
+  console.log(`Not found tokens with total of ${Object.keys(notFoundTokenSymbols).length} saved to temp/not-found-tokens.json`);
+  
+  fs.writeFileSync("./tokens-icons.json", JSON.stringify(tokenSymbolToImage, null, 2));
+  console.log(`\nResults with total of ${Object.keys(tokenSymbolToImage).length} saved to tokens-icons.json`);
+})();
