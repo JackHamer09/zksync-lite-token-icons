@@ -132,6 +132,11 @@ type Token = { id: string; symbol: string; name: string };
   } catch (error) {
     console.error(error);
   }
+
+  if (!fs.existsSync("./temp")) {
+    fs.mkdirSync("./temp");
+  }
+
   fs.writeFileSync("./temp/duplicate-tokens.json", JSON.stringify(multipleTokensForSingleSymbol, null, 2));
   console.log(`\nDuplicate tokens with total of ${Object.keys(multipleTokensForSingleSymbol).length} saved to temp/duplicate-tokens.json`);
   
