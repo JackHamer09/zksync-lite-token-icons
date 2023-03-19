@@ -1,0 +1,31 @@
+{
+  "name": "zksync-lite-token-icons",
+  "version": "1.0.0",
+  "description": "Icons for zkSync Lite tokens",
+  "main": "index.js",
+  "scripts": {
+    "parse": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zksync",
+    "lite",
+    "icons",
+    "icon",
+    "token",
+    "ethereum"
+  ],
+  "author": "JackHamer",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackHamer09/zksync-lite-token-icons.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JackHamer09/zksync-lite-token-icons/issues"
+  },
+  "homepage": "https://github.com/JackHamer09/zksync-lite-token-icons#readme",
+  "devDependencies": {
+    "ohmyfetch": "^0.4.21",
+    "zksync": "^0.13.1"
+  }
+}
